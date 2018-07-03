@@ -8,7 +8,7 @@ public class ResponseHandle {
 
     public static void printIndex(PrintStream printStream) {
         printOKStatus(printStream);
-        printContent(printStream,"index.html");
+        printContent(printStream,ServerHandle.getProperty("indexPage"));
     }
 
     public static void printResponse(PrintStream printStream, String resourceName) {
@@ -18,7 +18,7 @@ public class ResponseHandle {
 
     public static void printError(PrintStream printStream) {
         printErrorStatus(printStream);
-        printContent(printStream,"error.html");
+        printContent(printStream,ServerHandle.getProperty("errorPage"));
     }
 
     private static void printOKStatus(PrintStream printStream) {
@@ -32,7 +32,7 @@ public class ResponseHandle {
     }
 
     private static void printContent(PrintStream printStream,String resourceName) {
-        File responseFile = new File(ServerHandle.RESOURCEPATH + resourceName);
+        File responseFile = new File(ServerHandle.RESOURCE_PATH + resourceName);
 
         try (
                 FileInputStream fileInputStream = new FileInputStream(responseFile)

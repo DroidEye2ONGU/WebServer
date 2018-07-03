@@ -6,7 +6,9 @@ import java.net.Socket;
 public class Server {
 
     public void getConnect() throws Exception {
-        final ServerSocket serverSocket = new ServerSocket(23333);
+        //final ServerSocket serverSocket = new ServerSocket(23333);
+        final ServerSocket serverSocket = new ServerSocket(
+                Integer.parseInt(ServerHandle.getProperty("port")));
         while (true) {
             Socket socket = serverSocket.accept();
 
