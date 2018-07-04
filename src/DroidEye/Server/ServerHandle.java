@@ -6,6 +6,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 public class ServerHandle {
@@ -28,28 +32,25 @@ public class ServerHandle {
     }
 
     private static String getResourcePath() {
-        //String path = "";
-        //try (
-        //        BufferedReader br = new BufferedReader(
-        //                new InputStreamReader(
-        //                        new FileInputStream("C:\\Users\\DroidEye\\Desktop\\Programme\\IdeaProjects\\WebServer\\src\\Resources\\ResourcePath.properties")
-        //                ))
-        //) {
-        //    path = br.readLine();
-        //} catch (Exception e) {
-        //    e.printStackTrace();
-        //}
-        //return path;
+
         return getProperty("resourcePath");
     }
 
-    public static String getResourceName(Socket socket) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(
-                socket.getInputStream()));
+    public static Object getResource(Socket socket) throws Exception {
+
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(socket.getInputStream()));
 
         String msg = br.readLine();
-
         System.out.println(msg);
+        if (!isDynamicRequest(msg)) {
+            return getStaticResourceNameInGet(msg);
+        } else {
+            return getDynamicResourceNameInGet(msg);
+        }
+}
+
+    public static String getStaticResourceNameInGet(String msg) {
 
         int first = msg.indexOf("/");
         int last = msg.indexOf(" ", first);
@@ -60,6 +61,27 @@ public class ServerHandle {
 
     public static boolean fileExists(String resourceName) {
         return new File(RESOURCE_PATH + resourceName).exists();
+    }
+
+    //判断是否是动态资源请求(Get方式)
+    public static boolean isDynamicRequest(String msg) {
+        return msg.indexOf("?") != -1;
+    }
+
+    //获取Get方式请求中的资源,将请求的键值对保存在list集合中返回
+    public static List<String> getDynamicResourceNameInGet(String msg) {
+        //GET /login.html?user=123&password=abc HTTP/1.1
+
+
+        int requestPosition = msg.indexOf("?");
+        int endPosition = msg.indexOf(" ", requestPosition + 1);
+        String requestContent = msg.substring(requestPosition + 1,endPosition);
+
+        String[] values = requestContent.split("&");
+
+        System.out.println(Arrays.asList(values));
+
+        return Arrays.asList(values);
     }
 
 }
