@@ -1,4 +1,4 @@
-package DroidEye.Server;
+package DroidEye.Util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-public class ServerHandle {
+public class ServerUtil {
     public static final String RESOURCE_PATH = "C:\\Users\\DroidEye\\Desktop\\Programme\\IdeaProjects\\WebServer\\src\\DroidEye\\Resource\\";
     private static final String PROPERTY_NAME = "server.properties";
     public static String getProperty(String key) {
