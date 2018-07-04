@@ -65,7 +65,7 @@ public class ServerHandle {
 
     //获得包含有请求行 请求头 (Post时)请求体的字符串数组
     private static String[] getRequestInfo(Socket socket) throws IOException {
-        
+
         InputStream inputStream = socket.getInputStream();
 
         byte[] buff = new byte[1024];
