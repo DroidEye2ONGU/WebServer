@@ -1,19 +1,17 @@
 package DroidEye.Server;
 
-
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.List;
-import java.util.Properties;
 
 public class RequestHandle {
-
     public static void socketHandle(Socket socket) throws Exception{
         PrintStream printStream = new PrintStream(socket.getOutputStream());
 
-        //String msg = ServerHandle.getResource(socket);
+        //获取资源名
         Object resource =  ServerHandle.getResource(socket);
 
+        //返回的是字符串类,请求静态资源
         if (resource.getClass() == String.class) {
             String msg = (String) resource;
             if (msg.equals("")) {
@@ -23,7 +21,7 @@ public class RequestHandle {
             } else {
                 ResponseHandle.printError(printStream);
             }
-        } else {
+        } else {//否则返回的List集合,其中保存在动态请求资源
             List<String> values = (List) resource;
             System.out.println(values);
 
@@ -43,11 +41,6 @@ public class RequestHandle {
             } else {
                 ResponseHandle.printLoginError(printStream);
             }
-
-
         }
-
-
-
     }
 }
