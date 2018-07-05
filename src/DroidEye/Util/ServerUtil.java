@@ -101,8 +101,7 @@ public class ServerUtil {
 
         byte[] buff = new byte[1024];
         int hasRead;
-        //hasRead = inputStream.read(buff);
-        //String info = new String(buff, 0, hasRead);
+
         String info = "";
         int count = 1;
         while (count != 0) {
