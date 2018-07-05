@@ -3,7 +3,7 @@ package DroidEye.Server;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import DroidEye.Servlet.RequestServlet;
+import DroidEye.Util.RequestHandle;
 import DroidEye.Util.ServerUtil;
 
 public class Server {
@@ -17,7 +17,7 @@ public class Server {
             new Thread(()->{
                 System.out.println("一个新的连接");
                 try {
-                    RequestServlet.socketHandleService(socket);
+                    RequestHandle.socketHandleService(socket);
                     socket.close();
                 } catch (Exception e) {
                     e.printStackTrace();
